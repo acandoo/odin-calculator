@@ -48,9 +48,19 @@ document.querySelectorAll(".operator").forEach((button) => {
 });
 
 document.querySelector("#equals").addEventListener("click", () => {
-    const calculated = args[1](parseFloat(args[0], 10), parseFloat(args[2], 10));
+    const roundingCoefficient = 7;
+    const calculated =
+        Math.round(
+            args[1](parseFloat(args[0], 10), parseFloat(args[2], 10)) *
+                (10 ** roundingCoefficient),
+        ) / (10 ** roundingCoefficient);
     clear();
-    args[0] = calculated;
-    display.innerText = args[0];
+    if (Math.abs(calculated) === Infinity) {
+        args[0] = "";
+        display.innerText = "ERROR";
+    } else {
+        args[0] = calculated;
+        display.innerText = args[0];
+    }
     displayIsSolution = true;
 });
