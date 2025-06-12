@@ -10,7 +10,6 @@ document.querySelectorAll(".numeric").forEach((button) => {
         console.log(button.id);
         display.innerText += button.id;
         if (args[1] === "") {
-            
         }
     });
 });
