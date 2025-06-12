@@ -9,6 +9,9 @@ function clear() {
     args = new Array(3).fill("");
 }
 
+document.querySelector("#clear")
+    .addEventListener("click", clear);
+
 document.querySelectorAll(".numeric").forEach((button) => {
     button.addEventListener("click", () => {
         display.innerText += button.id;
@@ -37,6 +40,3 @@ document.querySelectorAll(".operator").forEach((button) => {
         }
     });
 });
-
-document.querySelector("#clear")
-    .addEventListener("click", clear);
