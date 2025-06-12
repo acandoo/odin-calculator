@@ -2,12 +2,14 @@ import { add, divide, multiply, subtract } from "./operations.js";
 
 const display = document.querySelector("#display");
 
-let args = new Array(3).fill("");
-let displayIsSolution = false;
+const calculatorState = {
+    args: new Array(3).fill(""),
+    displayIsSolution: false,
+};
 
 function clear() {
     display.innerText = "";
-    args = new Array(3).fill("");
+    calculatorState.args = new Array(3).fill("");
 }
 
 document.querySelector("#clear").addEventListener("click", clear);
@@ -15,23 +17,23 @@ document.querySelector("#clear").addEventListener("click", clear);
 document.querySelectorAll(".numeric").forEach((button) => {
     button.addEventListener("click", () => {
         const value = button.id;
-        if (args[1] !== "") {
+        if (calculatorState.args[1] !== "") {
             display.innerText += value;
-            args[2] += value;
-        } else if (displayIsSolution) {
-            args[0] = value;
+            calculatorState.args[2] += value;
+        } else if (calculatorState.displayIsSolution) {
+            calculatorState.args[0] = value;
             display.innerText = value;
-            displayIsSolution = false;
+            calculatorState.displayIsSolution = false;
         } else {
             display.innerText += value;
-            args[0] += value;
+            calculatorState.args[0] += value;
         }
     });
 });
 
 document.querySelectorAll(".operator").forEach((button) => {
     button.addEventListener("click", () => {
-        if (args[2] === "" && args[0] !== "") {
+        if (calculatorState.args[2] === "" && calculatorState.args[0] !== "") {
             const operations = {
                 "add": add,
                 "subtract": subtract,
@@ -39,28 +41,29 @@ document.querySelectorAll(".operator").forEach((button) => {
                 "divide": divide,
             };
 
-            display.innerText = args[0] + button.innerText;
+            display.innerText = calculatorState.args[0] + button.innerText;
 
             // TS devs when the array elements change type 😲
-            args[1] = operations[button.id];
+            calculatorState.args[1] = operations[button.id];
         }
     });
 });
 
 document.querySelector("#equals").addEventListener("click", () => {
     const roundingCoefficient = 7;
-    const calculated =
-        Math.round(
-            args[1](parseFloat(args[0], 10), parseFloat(args[2], 10)) *
-                (10 ** roundingCoefficient),
-        ) / (10 ** roundingCoefficient);
+    const calculated = Math.round(
+        calculatorState.args[1](
+            parseFloat(calculatorState.args[0], 10),
+            parseFloat(calculatorState.args[2], 10),
+        ) * (10 ** roundingCoefficient),
+    ) / (10 ** roundingCoefficient);
     clear();
     if (Math.abs(calculated) === Infinity) {
-        args[0] = "";
+        calculatorState.args[0] = "";
         display.innerText = "ERROR";
     } else {
-        args[0] = calculated;
-        display.innerText = args[0];
+        calculatorState.args[0] = calculated;
+        display.innerText = calculatorState.args[0];
     }
-    displayIsSolution = true;
+    calculatorState.displayIsSolution = true;
 });
