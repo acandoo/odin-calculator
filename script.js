@@ -22,7 +22,7 @@ document.querySelectorAll(".numeric").forEach((button) => {
 
 document.querySelectorAll(".operator").forEach((button) => {
     button.addEventListener("click", () => {
-        if (args[2] === "") {
+        if (args[2] === "" && args[0] !== "") {
             const operations = {
                 "plus": add,
                 "subtract": subtract,
