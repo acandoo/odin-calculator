@@ -9,8 +9,7 @@ function clear() {
     args = new Array(3).fill("");
 }
 
-document.querySelector("#clear")
-    .addEventListener("click", clear);
+document.querySelector("#clear").addEventListener("click", clear);
 
 document.querySelectorAll(".numeric").forEach((button) => {
     button.addEventListener("click", () => {
@@ -30,7 +29,7 @@ document.querySelectorAll(".operator").forEach((button) => {
                 "add": add,
                 "subtract": subtract,
                 "multiply": multiply,
-                "divide": divide
+                "divide": divide,
             };
 
             display.innerText = args[0] + button.innerText;
@@ -46,4 +45,4 @@ document.querySelector("#equals").addEventListener("click", () => {
     clear();
     args[0] = calculated;
     display.innerText = args[0];
-})
+});
