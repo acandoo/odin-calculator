@@ -41,7 +41,7 @@ document.querySelectorAll(".operator").forEach((button) => {
 });
 
 document.querySelector("#equals").addEventListener("click", () => {
-    const calculated = args[1](parseInt(args[0], 10), parseInt(args[2], 10));
+    const calculated = args[1](parseFloat(args[0], 10), parseFloat(args[2], 10));
     clear();
     args[0] = calculated;
     display.innerText = args[0];
