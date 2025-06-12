@@ -3,6 +3,7 @@ import { add, divide, multiply, subtract } from "./operations.js";
 const display = document.querySelector("#display");
 
 let args = new Array(3).fill("");
+let displayIsSolution = false;
 
 function clear() {
     display.innerText = "";
@@ -13,11 +14,17 @@ document.querySelector("#clear").addEventListener("click", clear);
 
 document.querySelectorAll(".numeric").forEach((button) => {
     button.addEventListener("click", () => {
-        display.innerText += button.id;
-        if (args[1] === "") {
-            args[0] += button.id;
+        const value = button.id;
+        if (args[1] !== "") {
+            display.innerText += value;
+            args[2] += value;
+        } else if (displayIsSolution) {
+            args[0] = value;
+            display.innerText = value;
+            displayIsSolution = false;
         } else {
-            args[2] += button.id;
+            display.innerText += value;
+            args[0] += value;
         }
     });
 });
@@ -45,4 +52,5 @@ document.querySelector("#equals").addEventListener("click", () => {
     clear();
     args[0] = calculated;
     display.innerText = args[0];
+    displayIsSolution = true;
 });
