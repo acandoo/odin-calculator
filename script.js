@@ -15,6 +15,27 @@ document.querySelectorAll(".numeric").forEach((button) => {
         console.log(button.id);
         display.innerText += button.id;
         if (args[1] === "") {
+            args[0] += button.id;
+        } else {
+            args[2] += button.id;
+        }
+    });
+});
+
+document.querySelectorAll(".operator").forEach((button) => {
+    button.addEventListener("click", () => {
+        if (args[2] === "") {
+            const operations = {
+                "plus": add,
+                "subtract": subtract,
+                "multiply": multiply,
+                "divide": divide
+            };
+
+            display.innerText = args[0] + button.innerText;
+
+            // TS devs when the array elements change type 😲
+            args[1] = operations[button.id];
         }
     });
 });
